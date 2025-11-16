@@ -1,0 +1,1902 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>校园论坛 - 寻找王小文</title>
+    <style>
+        /* 所有原有CSS样式保持不变 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background-color: #f8f4e9;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            border: 2px solid #3a6ea5;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #3a6ea5;
+        }
+        
+        h1 {
+            color: #3a6ea5;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 16px;
+        }
+        
+        .post {
+            margin-bottom: 25px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fefefe;
+            position: relative;
+        }
+        
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed #ddd;
+        }
+        
+        .username {
+            font-weight: bold;
+            color: #3a6ea5;
+        }
+        
+        .anonymous {
+            color: #888;
+            font-style: italic;
+        }
+        
+        .timestamp {
+            color: #888;
+            font-size: 14px;
+        }
+        
+        .post-content {
+            margin-bottom: 10px;
+        }
+        
+        .highlight {
+            background-color: #e8f1ff;
+            padding: 10px;
+            border-left: 3px solid #3a6ea5;
+            margin: 10px 0;
+        }
+        
+        .clue {
+            font-weight: bold;
+            color: #2a4e7a;
+        }
+        
+        .comment {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            border-left: 3px solid #ccc;
+        }
+        
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        
+        .puzzle-section {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #f0f7ff;
+            border: 1px solid #3a6ea5;
+            border-radius: 5px;
+        }
+        
+        .puzzle-section h3 {
+            margin-bottom: 10px;
+            color: #3a6ea5;
+        }
+        
+        .search-box {
+            display: flex;
+            margin-bottom: 15px;
+        }
+        
+        input[type="text"] {
+            flex-grow: 1;
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        
+        button {
+            background-color: #3a6ea5;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #2a4e7a;
+        }
+        
+        .result {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 4px;
+            display: none;
+        }
+        
+        .success {
+            background-color: #e8f7e8;
+            color: #2d7a2d;
+            border: 1px solid #2d7a2d;
+        }
+        
+        .error {
+            background-color: #ffe8e8;
+            color: #a52d2d;
+            border: 1px solid #a52d2d;
+        }
+        
+        .search-result {
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .class-photo {
+            width: 100%;
+            margin-top: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .student-list {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        
+        .student-list ul {
+            columns: 3;
+            list-style-type: none;
+        }
+        
+        .student-list li {
+            margin-bottom: 5px;
+            padding: 2px 0;
+        }
+        
+        .progress {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #888;
+            font-size: 14px;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+        }
+        
+        .hint {
+            font-size: 12px;
+            color: #888;
+            margin-top: 5px;
+        }
+        
+        .exit-button {
+            display: block;
+            margin: 20px auto;
+            background-color: #888;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        /* 手机桌面样式 */
+        .phone-desktop {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #222;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .phone-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+        
+        .app-icon {
+            background-color: #333;
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .app-icon:hover {
+            transform: scale(1.05);
+        }
+        
+        .app-content {
+            display: none;
+            margin-top: 20px;
+            background-color: #333;
+            border-radius: 15px;
+            padding: 20px;
+            color: white;
+            min-height: 400px;
+        }
+        
+        .news-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #555;
+        }
+        
+        .news-date {
+            font-size: 12px;
+            color: #aaa;
+            margin-bottom: 5px;
+        }
+        
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        
+        .photo-item {
+            background-color: #444;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+        }
+        
+        .chat-message {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 10px;
+            max-width: 80%;
+        }
+        
+        .message-left {
+            background-color: #444;
+            align-self: flex-start;
+        }
+        
+        .message-right {
+            background-color: #3a6ea5;
+            align-self: flex-end;
+            margin-left: auto;
+        }
+        
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 350px;
+            overflow-y: auto;
+        }
+        
+        .back-button {
+            background-color: #555;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+        
+        .class-photo-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        
+        .student-row {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 25%;
+            padding: 5px;
+        }
+        
+        .student {
+            width: 50px;
+            height: 50px;
+            background-color: #ddd;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .student.blur {
+            filter: blur(2px);
+            opacity: 0.7;
+        }
+        
+        .student.wang {
+            background-color: #aaa;
+            filter: blur(3px);
+            opacity: 0.5;
+        }
+        
+        .student-count {
+            text-align: center;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #555;
+        }
+        
+        .profile-avatar {
+            width: 60px;
+            height: 60px;
+            background-color: #555;
+            border-radius: 50%;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .moment-item {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #555;
+        }
+        
+        .moment-content {
+            margin: 10px 0;
+        }
+        
+        .moment-image {
+            width: 100%;
+            background-color: #444;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            margin: 10px 0;
+        }
+        
+        .note-item {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #444;
+            border-radius: 5px;
+        }
+        
+        .note-date {
+            font-size: 12px;
+            color: #aaa;
+            margin-bottom: 5px;
+        }
+        
+        .chat-avatar {
+            width: 40px;
+            height: 40px;
+            background-color: #555;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        
+        .warning-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            z-index: 1000;
+            display: none;
+            text-align: center;
+            font-size: 18px;
+        }
+        
+        .achievement-list {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        
+        .achievement-list ul {
+            list-style-type: none;
+        }
+        
+        .achievement-list li {
+            margin-bottom: 8px;
+            padding: 5px;
+            border-left: 3px solid #3a6ea5;
+            background-color: #f0f7ff;
+        }
+        
+        .photo-detail {
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #444;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .photo-caption {
+            margin-top: 10px;
+            font-style: italic;
+            color: #ccc;
+        }
+        
+        .three-days-only {
+            text-align: center;
+            color: #aaa;
+            font-style: italic;
+            margin: 20px 0;
+        }
+        
+        /* 故事结局页面 */
+        .story-ending {
+            display: none;
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            border: 2px solid #3a6ea5;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .story-ending h2 {
+            color: #3a6ea5;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .story-ending p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+        
+        .story-ending .highlight {
+            background-color: #e8f1ff;
+            padding: 15px;
+            border-left: 3px solid #3a6ea5;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- 警告消息 -->
+    <div id="warning-message" class="warning-message">
+        不要再找了。
+    </div>
+
+    <!-- 手机桌面界面 -->
+    <div id="phone-desktop" class="phone-desktop">
+        <div class="phone-header">
+            <div>14:25</div>
+            <div>📶 100% 🔋</div>
+        </div>
+        
+        <div class="app-grid">
+            <div class="app-icon" onclick="openApp('forum')">
+                <div>论坛</div>
+            </div>
+            <div class="app-icon" onclick="openApp('news')">
+                <div>今日鲜报</div>
+            </div>
+            <div class="app-icon" onclick="openApp('gallery')">
+                <div>相册</div>
+            </div>
+            <div class="app-icon" onclick="openApp('wechat')">
+                <div>微信</div>
+            </div>
+            <div class="app-icon" onclick="openApp('notes')">
+                <div>笔记</div>
+            </div>
+            <div class="app-icon">
+                <div>日历</div>
+            </div>
+        </div>
+        
+        <div id="app-content" class="app-content">
+            <!-- 应用内容将在这里动态加载 -->
+        </div>
+    </div>
+
+    <!-- 论坛界面 -->
+    <div id="forum-interface" class="container" style="display: none;">
+        <header>
+            <h1>青藤高中校园论坛</h1>
+            <p class="subtitle">分享校园生活，交流学习心得</p>
+        </header>
+        
+        <!-- 帖子：发现班级合影问题 -->
+        <div class="post">
+            <div class="post-header">
+                <span class="username">匿名用户</span>
+                <span class="timestamp">2024年10月16日 05:20</span>
+            </div>
+            <div class="post-content">
+                <p>我又发现了一些奇怪的事情。</p>
+                <p>我查看了班级合影，明明是47个人，但我总觉得照片上有什么不对劲。当我仔细看最后一排时，发现最右边的位置似乎有点模糊。</p>
+                <p>然后我问了班主任和同班同学，大家都说班里只有47个人，我开始怀疑自己了。</p>
+                <p>我现在越来越确定，我们班曾经有第48个人，但不知道为什么大家都忘记了ta的存在。</p>
+                
+                <div class="comment">
+                    <div class="comment-header">
+                        <span class="username">看到我叫我去学习</span>
+                        <span class="timestamp">2024年10月16日 05:45</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>这听起来像是集体记忆缺失现象。不过为什么只有你开始注意到这个问题？是不是有什么触发因素？</p>
+                    </div>
+                </div>
+                
+                <div class="comment">
+                    <div class="comment-header">
+                        <span class="username">匿名用户</span>
+                        <span class="timestamp">2024年10月16日 06:10</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>回复@看到我叫我去学习：触发因素可能就是那个刻痕。自从摸到那个刻痕后，我的记忆就开始变得混乱。</p>
+                    </div>
+                </div>
+                
+                <div class="comment">
+                    <div class="comment-header">
+                        <span class="username">熬夜冠军</span>
+                        <span class="timestamp">2024年10月16日 06:25</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>我刚刚去翻了去年的<span class="clue">班级合照</span>，我们班确实是48个人！但名册上只有47个名字！</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 帖子：关于奇怪的梦 -->
+        <div class="post">
+            <div class="post-header">
+                <span class="username">匿名用户</span>
+                <span class="timestamp">2024年10月16日 00:30</span>
+            </div>
+            <div class="post-content">
+                <p>谢谢大家的回复，昨晚发帖后我做了个奇怪的梦。</p>
+                <p>梦里我回到了教室，看到一个模糊的身影坐在最后一排靠窗的位置。我走过去想看清ta的脸，但总是看不清楚。</p>
+                <p>醒来后我决定去教室确认一下。你们猜怎么着？最后一排靠窗的位置确实有一张空桌子，上面放着一本笔记本。</p>
+                <p>我翻开笔记本，里面只有一页有内容，写着：<span class="clue">"为什么为什么为什么？？？？我已经很努力了！......我真的尽力了！！！"</span>。</p>
+                <p>更奇怪的是，当我问其他同学时，他们都说那张桌子一直是空的，没人用过。</p>
+                
+                <div class="comment">
+                    <div class="comment-header">
+                        <span class="username">熬夜冠军</span>
+                        <span class="timestamp">2024年10月16日 00:45</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>有意思！这笔记本上有没有其他线索？比如日期、特殊符号之类的？</p>
+                    </div>
+                </div>
+                
+                <div class="comment">
+                    <div class="comment-header">
+                        <span class="username">momo</span>
+                        <span class="timestamp">2024年10月16日 01:10</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>楼主是哪个班的？说不定可以去你们班看看</p>
+                    </div>
+                </div>
+                
+                <div class="comment">
+                    <div class="comment-header">
+                        <span class="username">匿名用户</span>
+                        <span class="timestamp">2024年10月16日 01:20</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>回复@momo：我是<span class="clue">高三10班</span>的，不过我觉得你们来了也看不到什么，那张桌子现在看起来就是普通的空桌子。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 帖子：寻找王小文 -->
+        <div class="post">
+            <div class="post-header">
+                <span class="username anonymous">匿名用户</span>
+                <span class="timestamp">2024年10月15日 23:47</span>
+            </div>
+            <div class="post-content">
+                <p>有谁认识<span class="clue">王小文</span>吗？</p>
+                <p>我已经记不太清ta长什么样了，严格意义上我的记忆告诉我，我并不认识ta，ta也不认识我。但是我总觉得我认识ta，我记得ta更多时候只是坐在教室最后一排，ta从来不会主动发言，像个透明人一样，每天去食堂，回宿舍，三点一线。</p>
+                <p>本来说到这我不应该注意到的，但是我今天在班里的放在讲台边上的桌子表面摸到了一个很浅的刻痕，写的是<span class="clue">王小文</span>三个字，我才逐渐感觉到我们班是不是有这样一个人。</p>
+                <p>奇怪，我明明记得我们班就是只有<span class="clue">47人</span>啊，但是自从我摸到了这个刻痕我心里的违和感就越来越严重。</p>
+                
+                <div class="comment">
+                    <div class="comment-header">
+                        <span class="username">momo</span>
+                        <span class="timestamp">2024年10月15日 23:52</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>深夜了，又有校园怪谈了，楼主继续！期待下文</p>
+                    </div>
+                </div>
+                
+                <div class="comment">
+                    <div class="comment-header">
+                        <span class="username">看到我叫我去学习</span>
+                        <span class="timestamp">2024年10月15日 23:55</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>王小文？我们年级有这个人吗？怎么一点印象都没有...</p>
+                    </div>
+                </div>
+                
+                <div class="comment">
+                    <div class="comment-header">
+                        <span class="username">不到年级前三不改名</span>
+                        <span class="timestamp">2024年10月16日 00:03</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>楼主是不是小说看多了，现实跟虚拟分不清，还是老老实实学习吧，不要想些没用的。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 帖子：写作天才 -->
+        <div class="post">
+            <div class="post-header">
+                <span class="username">我想静静</span>
+                <span class="timestamp">2024年9月22日 01:02</span>
+            </div>
+            <div class="post-content">
+                <p>大家还记得之前有一个女生写作特别好吗？经常拿到写作大赛冠军的那个。</p>
+                <p>她的文章真的很有灵气，语文老师经常在课上念她的作文。</p>
+                <p>不知道她现在怎么样了，好久没看到她的作品了。</p>
+                
+                <div class="comment">
+                    <div class="comment-header">
+                        <span class="username">不到年级前三不改名</span>
+                        <span class="timestamp">2024年9月22日 01:20</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>是谁？哪个班的？</p>
+                    </div>
+                </div>
+                
+                <div class="comment">
+                    <div class="comment-header">
+                        <span class="username">我想静静</span>
+                        <span class="timestamp">2024年9月22日 01:35</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>回复@不到年级前三不改名：记不太清了，可能是高三10班的吧，毕竟是重点班</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 帖子：吐槽周强 -->
+        <div class="post">
+            <div class="post-header">
+                <span class="username">俺想睡觉</span>
+                <span class="timestamp">2024年9月8日 23:01</span>
+            </div>
+            <div class="post-content">
+                <p>有没有人觉得周强好胜心太重了？每次考试都要跟别人比分数，差一分都不行...</p>
+                <p>上次我数学考了142分，他就一直追问我哪里扣分了，非要找出我错在哪里，真的好烦。</p>
+                
+                <div class="comment">
+                    <div class="comment-header">
+                        <span class="username">吃瓜群众</span>
+                        <span class="timestamp">2024年9月8日 23:15</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>+1，他确实有点太较真了，感觉他对成绩有种病态的执着</p>
+                    </div>
+                </div>
+                
+                <div class="comment">
+                    <div class="comment-header">
+                        <span class="username">路过的小透明</span>
+                        <span class="timestamp">2024年9月8日 23:30</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>听说他每天晚上都学习到凌晨三四点，太可怕了</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 帖子：夸赞语文老师 -->
+        <div class="post">
+            <div class="post-header">
+                <span class="username">文学爱好者</span>
+                <span class="timestamp">2024年9月2日 23:18</span>
+            </div>
+            <div class="post-content">
+                <p>今天想夸夸我们的语文老师！她真的是我见过最好的老师！</p>
+                <p>她从不只看成绩，总是能发现每个学生的闪光点。特别是对那些不太自信的同学，她总是给予最多的鼓励。</p>
+                <p>记得有一次，她发现一个平时很安静的同学写作特别有天赋，就一直鼓励她参加写作比赛，后来那个同学真的获奖了！</p>
+                
+                <div class="comment">
+                    <div class="comment-header">
+                        <span class="username">感恩的心</span>
+                        <span class="timestamp">2024年9月2日 23:35</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>+1，语文老师真的很好，她总是能看到学生的优点</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 帖子：安全管理员提醒 -->
+        <div class="post">
+            <div class="post-header">
+                <span class="username">安全管理员</span>
+                <span class="timestamp">2024年6月22日 14:00</span>
+            </div>
+            <div class="post-content">
+                <p>重要提醒：学校后山水库区域已经封闭，请同学们不要在水库附近逗留！</p>
+                <p>最近水位上涨，岸边湿滑，非常危险。学校已经加强巡逻，发现违规者将严肃处理。</p>
+                <p>安全第一，请大家务必遵守规定！</p>
+            </div>
+        </div>
+        
+        <!-- 帖子：何勇澄清 -->
+        <div class="post">
+            <div class="post-header">
+                <span class="username">受不了了</span>
+                <span class="timestamp">2024年6月11日 22:15</span>
+            </div>
+            <div class="post-content">
+                <p>大家好！我是何勇，近期论坛内有人造谣我骚扰别的女同学。我在此澄清，我何勇行得正坐得端，我只沉迷于学习，根本没时间处理情情爱爱的事情！</p>
+                <p>而且造谣者说的那个女生，我说实话，她成绩又一般，性格又普通，我根本看不上，好吧？</p>
+                <p>如果再有人发帖造谣我，我将走法律程序！</p>
+                
+                <div class="comment">
+                    <div class="comment-header">
+                        <span class="username">吃瓜群众</span>
+                        <span class="timestamp">2024年6月11日 22:30</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>支持维权！网络不是法外之地！</p>
+                    </div>
+                </div>
+                
+                <div class="comment">
+                    <div class="comment-header">
+                        <span class="username">匿名用户</span>
+                        <span class="timestamp">2024年6月11日 22:45</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>那个女生是谁啊？好奇</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 帖子：猪处理求助 -->
+        <div class="post">
+            <div class="post-header">
+                <span class="username">w</span>
+                <span class="timestamp">2024年6月10日 15:20</span>
+            </div>
+            <div class="post-content">
+                <p>江湖救急！大家知道怎么处理一个体重大约120斤，约1.65米长的猪吗？主要是吃不完，想剁成小块的，然后处理完的血怎么清洗啊？</p>
+                
+                <div class="comment">
+                    <div class="comment-header">
+                        <span class="username">路人甲</span>
+                        <span class="timestamp">2024年6月10日 15:30</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>楼主你自首吧</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 帖子：食堂工作人员 -->
+        <div class="post">
+            <div class="post-header">
+                <span class="username">食堂工作人员</span>
+                <span class="timestamp">2024年6月8日 11:30</span>
+            </div>
+            <div class="post-content">
+                <p>重要通知：近期发现食堂刀叉餐具少了很多，请各位同学不要将餐具带出食堂！违者严肃处理！</p>
+                <p>餐具是公共财产，请大家共同维护。如发现有人私自带出餐具，请及时向食堂工作人员反映。</p>
+            </div>
+        </div>
+        
+        <!-- 帖子：吐槽张明 -->
+        <div class="post">
+            <div class="post-header">
+                <span class="username">受不了了</span>
+                <span class="timestamp">2024年6月6日 22:57</span>
+            </div>
+            <div class="post-content">
+                <p>吐槽一下张明，能不能注意一下个人卫生啊！每次上体育课后的教室简直无法呼吸...</p>
+                <p>脚臭真的会影响周围同学的学习心情，希望他能改进一下。</p>
+            </div>
+        </div>
+        
+        <!-- 帖子：吐槽吴婷 -->
+        <div class="post">
+            <div class="post-header">
+                <span class="username">匿名用户</span>
+                <span class="timestamp">2024年5月30日 22:09</span>
+            </div>
+            <div class="post-content">
+                <p>吐槽一下吴婷，做派真的很嚣张，像大姐大一样，惹不起...</p>
+                <p>她和她的小团体整天在校园里横行霸道，看到她们我都绕道走。</p>
+                
+                <div class="comment">
+                    <div class="comment-header">
+                        <span class="username">同感</span>
+                        <span class="timestamp">2024年5月30日 22:25</span>
+                    </div>
+                    <div class="comment-content">
+                        <p>+1，她确实有点太霸道了，成绩好就可以这样吗？</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="puzzle-section">
+            <h3>记忆修复挑战</h3>
+            <p>根据你在论坛中发现的线索，尝试解开王小文消失的谜团。</p>
+            <p class="hint">提示：尝试搜索帖子中你认为可疑的关键词</p>
+            
+            <div class="search-box">
+            <input type="text" id="search-input" placeholder="请输入搜索关键词">
+            <button onclick="searchKeyword()">搜索</button>
+            </div>
+        </div>
+        
+        <div id="search-result" class="search-result"></div>
+        
+        <div class="search-box" style="margin-top: 20px;">
+            <input type="text" id="password-input" placeholder="请输入最终解谜答案">
+            <button onclick="checkPassword()">修复记忆</button>
+        </div>
+            
+            <div id="result" class="result"></div>
+        
+
+        
+        <button class="exit-button" onclick="exitForum()">退出论坛</button>
+        
+        <footer>
+            <p>青藤高中校园论坛 &copy; 2024 - 本故事纯属虚构</p>
+        </footer>
+    </div>
+
+    <!-- 故事结局页面 -->
+    <div id="story-ending" class="story-ending">
+        <h2>真相大白：王小文消失之谜</h2>
+        
+        <div class="highlight">
+            <p>恭喜你成功解开了王小文消失的谜团！以下是整个事件的真相：</p>
+        </div>
+        
+        <p>青藤高校是一所军事化管理，极其注重学生成绩的高中。每年都有许多学生因为压力过大选择自杀，但学校处理这些总是轻车熟路，给封口费，封锁信息...这让王小文被谋杀的案情被掩盖得更加理所应当。王小文是青藤高中高三10班的一名学生，她性格内向自卑，成绩平平，但拥有非凡的写作天赋。语文老师发现了她的才华，经常在课堂上表扬她的作文，并鼓励她参加写作比赛。这也许让许多不怀好意的人注意到她，吴婷带头霸凌这位不会反抗的"写作之星"，何勇骚扰这位沉默寡言的女生，却言语羞辱，再次贬低王小文。这让王小文愈发觉得自己根本就没有存在的必要。</p>
+        
+        <p>然而，班级班长周强是一个病态的优绩主义者，他对成绩有着近乎偏执的追求。当他发现语文老师对王小文的特别赏识后，开始感到威胁。他担心王小文的写作才华会让她在综合评价中超越自己，影响他的排名。</p>
+        
+        <p>2024年6月21日，周强精心策划了一个阴谋。他以讨论写作比赛为借口，将王小文骗到学校后山水库。在那里，他趁王小文不备，将她推入水中。王小文不会游泳，最终溺水身亡。</p>
+        
+        <p>王小文生前极度自卑，常常觉得自己在这个世界上没有存在的意义。她死后，这种强烈的自我否定情绪触发了超自然力量，篡改了所有人的记忆，让大家完全忘记了她这个人的存在。</p>
+        
+        <p>只有始作俑者周强保留了完整的记忆。当他发现所有人都忘记了王小文时，他感到庆幸，并开始有意识地抹除王小文存在的一切痕迹。他删除了学生档案中的记录，销毁了王小文的作业和作品，甚至试图抹去论坛上关于她的讨论。</p>
+        
+        <p>然而，一些痕迹是无法完全抹除的：</p>
+        <ul>
+            <li>班级合照上模糊的第48个人影</li>
+            <li>课桌上浅浅的"王小文"刻痕</li>
+            <li>写作大赛历年获奖名单上连续两年的冠军名字</li>
+            <li>论坛上零星的提及和感谢帖</li>
+            <li>食堂丢失的餐具（吴婷用来霸凌王小文的工具）</li>
+        </ul>
+        
+        <p>你的敏锐观察和坚持不懈的调查，最终让这个被遗忘的真相重见天日。王小文，每个生命都值得被看见、被尊重。</p>
+        
+        <button class="back-button" onclick="backToForum()" style="display: block; margin: 20px auto;">返回论坛</button>
+    </div>
+
+    <script>
+        let cluesFound = 0;
+        const totalClues = 3;
+        let foundClues = {
+            'classList': false,
+            'classPhoto': false,
+            'wxwFolder': false
+        };
+        let searchCount = 0;
+        
+        // 初始显示手机桌面，隐藏论坛和故事结局
+        document.getElementById('phone-desktop').style.display = 'block';
+        document.getElementById('forum-interface').style.display = 'none';
+        document.getElementById('story-ending').style.display = 'none';
+        
+        // 显示警告消息
+        function showWarning() {
+            const warning = document.getElementById('warning-message');
+            warning.style.display = 'block';
+            setTimeout(() => {
+                warning.style.display = 'none';
+            }, 2000);
+        }
+        
+        // 搜索关键词
+        function searchKeyword() {
+            const input = document.getElementById('search-input').value.trim();
+            const resultDiv = document.getElementById('search-result');
+            
+            searchCount++;
+            
+            // 随机显示警告消息
+            if (searchCount % 3 === 0) {
+                showWarning();
+            }
+            
+            if (input === '高三10班' || input === '10班') {
+                resultDiv.innerHTML = `
+                    <h4>高三10班学生名册</h4>
+                    <div class="student-list">
+                        <ul>
+                            <li>张明</li>
+                            <li>李华</li>
+                            <li>王芳</li>
+                            <li>刘伟</li>
+                            <li>陈静</li>
+                            <li>杨帆</li>
+                            <li>黄娟</li>
+                            <li>周强</li>
+                            <li>吴婷</li>
+                            <li>郑浩</li>
+                            <li>孙悦</li>
+                            <li>朱琳</li>
+                            <li>马超</li>
+                            <li>胡佳</li>
+                            <li>林峰</li>
+                            <li>郭美</li>
+                            <li>何勇</li>
+                            <li>高洁</li>
+                            <li>梁辉</li>
+                            <li>罗敏</li>
+                            <li>宋佳</li>
+                            <li>谢娜</li>
+                            <li>唐雨</li>
+                            <li>韩梅</li>
+                            <li>冯军</li>
+                            <li>董洁</li>
+                            <li>萧然</li>
+                            <li>程晨</li>
+                            <li>彭宇</li>
+                            <li>曾静</li>
+                            <li>苏明</li>
+                            <li>潘婷</li>
+                            <li>蒋伟</li>
+                            <li>蔡敏</li>
+                            <li>余浩</li>
+                            <li>杜娟</li>
+                            <li>魏佳</li>
+                            <li>薛峰</li>
+                            <li>叶琳</li>
+                            <li>闫超</li>
+                            <li>崔静</li>
+                            <li>康辉</li>
+                            <li>史强</li>
+                            <li>范伟</li>
+                            <li>贺佳</li>
+                            <li>倪娜</li>
+                            <li>洪涛</li>
+                        </ul>
+                    </div>
+                    <p class="hint">奇怪，名册上确实只有47个人...</p>
+                `;
+                resultDiv.style.display = "block";
+            } else if (input === '班级合照' || input === '合照') {
+                resultDiv.innerHTML = `
+                    <h4>高三10班班级合照</h4>
+                    <p>这是高三10班的班级合照，仔细数一数...</p>
+                    <div class="class-photo-container">
+                        <div class="student-row">
+                            <div class="student">张</div>
+                            <div class="student">李</div>
+                            <div class="student">王</div>
+                            <div class="student">刘</div>
+                            <div class="student">陈</div>
+                            <div class="student">杨</div>
+                            <div class="student">黄</div>
+                            <div class="student">周</div>
+                            <div class="student">吴</div>
+                            <div class="student">郑</div>
+                            <div class="student">孙</div>
+                            <div class="student">朱</div>
+                        </div>
+                        <div class="student-row">
+                            <div class="student">马</div>
+                            <div class="student">胡</div>
+                            <div class="student">林</div>
+                            <div class="student">郭</div>
+                            <div class="student">何</div>
+                            <div class="student">高</div>
+                            <div class="student">梁</div>
+                            <div class="student">罗</div>
+                            <div class="student">宋</div>
+                            <div class="student">谢</div>
+                            <div class="student">唐</div>
+                            <div class="student">韩</div>
+                        </div>
+                        <div class="student-row">
+                            <div class="student">冯</div>
+                            <div class="student">董</div>
+                            <div class="student">萧</div>
+                            <div class="student">程</div>
+                            <div class="student">彭</div>
+                            <div class="student">曾</div>
+                            <div class="student">苏</div>
+                            <div class="student">潘</div>
+                            <div class="student">蒋</div>
+                            <div class="student">蔡</div>
+                            <div class="student">余</div>
+                            <div class="student">杜</div>
+                        </div>
+                        <div class="student-row">
+                            <div class="student">魏</div>
+                            <div class="student">薛</div>
+                            <div class="student">叶</div>
+                            <div class="student">闫</div>
+                            <div class="student">崔</div>
+                            <div class="student">康</div>
+                            <div class="student">史</div>
+                            <div class="student">范</div>
+                            <div class="student">贺</div>
+                            <div class="student">倪</div>
+                            <div class="student">洪</div>
+                            <div class="student wang">王</div>
+                        </div>
+                    </div>
+                    <div class="student-count">学生总数: 48人</div>
+                    <p class="hint">等等，这张照片上有48个人？但名册上只有47个名字...</p>
+                `;
+                resultDiv.style.display = "block";
+                
+                if (!foundClues.classPhoto) {
+                    foundClues.classPhoto = true;
+                }
+            } else if (input === '王小文') {
+                resultDiv.innerHTML = `
+                    <h4>关于王小文</h4>
+                    <p>搜索结果显示没有名为"王小文"的学生记录。</p>
+                    <p class="hint" style="color: #ccc; margin-top: 10px;">等等，我好像对这个名字有一些模糊的记忆，但具体内容却想不起来了...</p>
+                    <p class="hint" style="color: #ccc; margin-top: 10px;">也许我需要更多的线索才能想起关于他/她的事情。</p>
+                `;
+                resultDiv.style.display = "block";
+            } else if (input === '青藤高中') {
+                resultDiv.innerHTML = `
+                    <h4>关于青藤高中的搜索结果</h4>
+                    <div class="news-item">
+                        <div class="news-date">2024年5月15日</div>
+                        <h4>青藤高中高三10班48名同学参与市内大合唱比赛，获得冠军！</h4>
+                        <p>在刚刚结束的青藤市高中生艺术节大合唱比赛中，青藤高中高三10班的48名同学凭借出色的表现荣获冠军...</p>
+                    </div>
+                    <p class="hint">等等，48名同学？但现在的学生名册上只有47人...</p>
+                `;
+                resultDiv.style.display = "block";
+            } else if (input === '周强') {
+                resultDiv.innerHTML = `
+                    <h4>关于周强的搜索结果</h4>
+                    <div class="achievement-list">
+                        <h4>周强的优秀荣誉</h4>
+                        <ul>
+                            <li>2024年全国高中数学联赛一等奖</li>
+                            <li>2024年青藤市优秀学生干部</li>
+                            <li>2023-2024学年年级第一名</li>
+                            <li>2024年校运会男子1500米冠军</li>
+                            <li>2023年全国中学生英语能力竞赛特等奖</li>
+                        </ul>
+                    </div>
+                    <p class="hint">周强的成绩确实非常优秀，但他似乎对成绩有着近乎病态的追求...</p>
+                `;
+                resultDiv.style.display = "block";
+            } else if (input === '吴婷') {
+                resultDiv.innerHTML = `
+                    <h4>关于吴婷的搜索结果</h4>
+                    <div class="post">
+                        <div class="post-header">
+                            <span class="username">保安保安保卫一方平安</span>
+                            <span class="timestamp">2023年11月3日</span>
+                        </div>
+                        <div class="post-content">
+                            <p>吴婷你不要再欺负别人了可以吗？成绩好了不起吗？全校壁垒吴婷和她的小团体！！</p>
+                            <p>今天又看到你在食堂欺负那个安静的女同学，人家都不敢抬头看你，你还在那里笑！</p>
+                        </div>
+                    </div>
+                    <div class="post">
+                        <div class="post-header">
+                            <span class="username">匿名用户</span>
+                            <span class="timestamp">2024年5月30日 22:09</span>
+                        </div>
+                        <div class="post-content">
+                            <p>吐槽一下吴婷，做派真的很嚣张，像大姐大一样，惹不起...</p>
+                            <p>她和她的小团体整天在校园里横行霸道，看到她们我都绕道走。</p>
+                        </div>
+                    </div>
+                    <p class="hint">吴婷似乎有霸凌行为...</p>
+                `;
+                resultDiv.style.display = "block";
+            } else if (input === '何勇') {
+                resultDiv.innerHTML = `
+                    <h4>关于何勇的搜索结果</h4>
+                    <div class="post">
+                        <div class="post-header">
+                            <span class="username">看不下去</span>
+                            <span class="timestamp">2024年6月9日 23:21</span>
+                        </div>
+                        <div class="post-content">
+                            <p>何勇你能不能不要再骚扰别的女生了？人家明显不想理你，你还天天缠着人家。</p>
+                            <p>每次看到那个女生躲着你走的样子，真的让人心疼。</p>
+                        </div>
+                    </div>
+                    <div class="post">
+                        <div class="post-header">
+                            <span class="username">受不了了</span>
+                            <span class="timestamp">2024年6月11日 22:15</span>
+                        </div>
+                        <div class="post-content">
+                            <p>大家好！我是何勇，近期论坛内有人造谣我骚扰别的女同学。我在此澄清，我何勇行得正坐得端，我只沉迷于学习，根本没时间处理情情爱爱的事情！</p>
+                            <p>而且造谣者说的那个女生，我说实话，她成绩又一般，性格又普通，我根本看不上，好吧？</p>
+                            <p>如果再有人发帖造谣我，我将走法律程序！</p>
+                        </div>
+                    </div>
+                    <p class="hint">何勇似乎一直在骚扰某个女生，但他本人极力否认...</p>
+                `;
+                resultDiv.style.display = "block";
+            } else if (input === '张明') {
+                resultDiv.innerHTML = `
+                    <h4>关于张明的搜索结果</h4>
+                    <div class="post">
+                        <div class="post-header">
+                            <span class="username">受不了了</span>
+                            <span class="timestamp">2024年10月14日 22:57</span>
+                        </div>
+                        <div class="post-content">
+                            <p>吐槽一下张明，能不能注意一下个人卫生啊！每次上体育课后的教室简直无法呼吸...</p>
+                            <p>脚臭真的会影响周围同学的学习心情，希望他能改进一下。</p>
+                        </div>
+                    </div>
+                    <p class="hint">张明似乎有个人卫生问题...</p>
+                `;
+                resultDiv.style.display = "block";
+            } else if (input === '食堂') {
+                resultDiv.innerHTML = `
+                    <h4>关于食堂的搜索结果</h4>
+                    <div class="post">
+                        <div class="post-header">
+                            <span class="username">教务处</span>
+                            <span class="timestamp">2024年6月15日 14:00</span>
+                        </div>
+                        <div class="post-content">
+                            <h5>违纪通告</h5>
+                            <p>高三2班白朴、高三5班池柏史、高三8班蒋沸、陈允文、高三10班李婷、张明因违规将食堂餐具带出食堂，各扣班级荣誉分5分！望同学们引以为戒！</p>
+                        </div>
+                    </div>
+                    <p class="hint">违纪通告中提到了高三10班的李婷和张明...</p>
+                `;
+                resultDiv.style.display = "block";
+            } else if (input.includes('水库')) {
+            resultDiv.innerHTML = `
+                <h4>关于水库的搜索结果</h4>
+                <div class="post">
+                    <div class="post-header">
+                        <span class="username">安全管理员</span>
+                        <span class="timestamp">2024年10月10日 14:00</span>
+                    </div>
+                    <div class="post-content">
+                        <p>重要提醒：学校后山水库区域已经封闭，请同学们不要在水库附近逗留！</p>
+                        <p>最近水位上涨，岸边湿滑，非常危险。学校已经加强巡逻，发现违规者将严肃处理。</p>
+                    </div>
+                </div>
+                <div class="post">
+                    <div class="post-header">
+                        <span class="username">mimo</span>
+                        <span class="timestamp">2024年6月28日 24:00</span>
+                    </div>
+                    <div class="post-content">
+                        <p>大家有没有觉得水库最近有点臭...</p>
+                        <p>前几天路过水库，闻到一股怪味，不知道是什么情况。</p>
+                    </div>
+                </div>
+                <div class="post">
+                    <div class="post-header">
+                        <span class="username">背书好难</span>
+                        <span class="timestamp">2024年6月21日 20:15</span>
+                    </div>
+                    <div class="post-content">
+                        <p>小情侣能不能不要在水库亲亲我我，本来背书就烦了！</p>
+                        <p>今天去水库边背书，看到一对小情侣在那里腻腻歪歪，真是影响心情。</p>
+                    </div>
+                </div>
+                <p class="hint">学校水库似乎是个危险的地方，而且最近有异味，6月21日还有人看到情侣在那里...</p>
+            `;
+            resultDiv.style.display = "block";
+            } else if (input === '写作大赛') {
+                resultDiv.innerHTML = `
+                    <h4>关于写作大赛的搜索结果</h4>
+                    <div class="achievement-list">
+                        <h4>青藤高中写作大赛历年获奖名单</h4>
+                        <ul>
+                            <li>2024年：王小文《时光的痕迹》</li>
+                            <li>2023年：王小文《沉默的回声》</li>
+                            <li>2022年：陈六《青春的颜色》</li>
+                            <li>2021年：陈财《梦想的翅膀》</li>
+                            <li>2020年：胡迪《远方的风景》</li>
+                        </ul>
+                    </div>
+                    <p class="hint">王小文连续两年获得写作大赛冠军，但现在的学生名册上却没有这个人...</p>
+                `;
+                resultDiv.style.display = "block";
+            } else if (input) {
+                resultDiv.innerHTML = `<p>查不到相关记录！</p>`;
+                resultDiv.style.display = "block";
+            } else {
+                resultDiv.innerHTML = `<p>请输入搜索关键词</p>`;
+                resultDiv.style.display = "block";
+            }
+        }
+        
+        
+        
+        // 检查密码
+        function checkPassword() {
+            const input = document.getElementById('password-input').value.trim().toLowerCase();
+            const resultDiv = document.getElementById('result');
+            
+            // 检查是否同时包含周强和王小文，以及相关的关键词
+            const hasZhouQiang = input.includes('周强');
+            const hasWangXiaowen = input.includes('王小文');
+            const hasKeywords = ['杀', '害', '死', '凶手', '水库', '真相'].some(keyword => input.includes(keyword));
+            
+            // 只有同时包含周强和王小文，且包含至少一个关键词时才算成功
+            if (hasZhouQiang && hasWangXiaowen) {
+                // 显示故事结局页面
+                document.getElementById('forum-interface').style.display = 'none';
+                document.getElementById('phone-desktop').style.display = 'none';
+                document.getElementById('story-ending').style.display = 'block';
+            } else {
+                resultDiv.textContent = "答案错误，请重新尝试。提示：结合所有线索思考，王小文遭遇了什么？请保证答案格式为：xx（主语）xx（动作）王小文";
+                resultDiv.className = "result error";
+                resultDiv.style.display = "block";
+            }
+        }
+        
+        // 返回论坛
+        function backToForum() {
+            document.getElementById('story-ending').style.display = 'none';
+            document.getElementById('forum-interface').style.display = 'block';
+        }
+        
+        // 退出论坛
+        function exitForum() {
+            document.getElementById('forum-interface').style.display = 'none';
+            document.getElementById('phone-desktop').style.display = 'block';
+        }
+        
+        // 打开应用
+        function openApp(appName) {
+            const appContent = document.getElementById('app-content');
+            appContent.style.display = 'block';
+            
+            if (appName === 'forum') {
+                document.getElementById('phone-desktop').style.display = 'none';
+                document.getElementById('forum-interface').style.display = 'block';
+                return;
+            }
+            
+            if (appName === 'news') {
+                appContent.innerHTML = `
+                    <button class="back-button" onclick="closeApp()">返回</button>
+                    <h3>今日鲜报</h3>
+                    <div class="search-box">
+                        <input type="text" id="news-search-input" placeholder="搜索新闻">
+                        <button onclick="searchNews()">搜索</button>
+                    </div>
+                    <div id="news-search-result" style="margin-top: 15px;"></div>
+                    <div class="news-item">
+                        <div class="news-date">2024年10月16日</div>
+                        <h4>青藤市将举办科技文化节</h4>
+                        <p>青藤市将于下月举办一年一度的科技文化节，各中小学正在积极准备参展作品...</p>
+                    </div>
+                    <div class="news-item">
+                        <div class="news-date">2024年10月15日</div>
+                        <h4>市区新建图书馆即将开放</h4>
+                        <p>位于市中心的青藤市新图书馆已完成内部装修，预计下月初向公众开放...</p>
+                    </div>
+                    <div class="news-item">
+                        <div class="news-date">2024年10月14日</div>
+                        <h4>青藤高中秋季运动会圆满结束</h4>
+                        <p>青藤高中于上周五举办了秋季运动会，各班同学积极参与，展现了青春活力...</p>
+                    </div>
+                `;
+            } else if (appName === 'gallery') {
+                appContent.innerHTML = `
+                    <button class="back-button" onclick="closeApp()">返回</button>
+                    <h3>相册</h3>
+                    <div class="photo-grid">
+                        <div class="photo-item" onclick="viewPhoto('班级合照')">班级合照</div>
+                        <div class="photo-item" onclick="viewPhoto('运动会')">运动会</div>
+                        <div class="photo-item" onclick="viewPhoto('春游')">春游</div>
+                        <div class="photo-item" onclick="viewPhoto('教室')">教室</div>
+                        <div class="photo-item" onclick="viewPhoto('图书馆')">图书馆</div>
+                        <div class="photo-item" onclick="viewPhoto('食堂')">食堂</div>
+                    </div>
+                    <div id="photo-viewer" style="margin-top: 20px; display: none;"></div>
+                `;
+            } else if (appName === 'wechat') {
+                appContent.innerHTML = `
+                    <button class="back-button" onclick="closeApp()">返回</button>
+                    <h3>微信群 - 高三10班</h3>
+                    <div class="chat-container">
+                        <div class="chat-message message-left">
+                            <span class="chat-avatar" onclick="viewProfile('张明')">张</span>
+                            <strong>张明:</strong> 你们看到论坛上那个帖子了吗？
+                        </div>
+                        <div class="chat-message message-right">
+                            <strong>我:</strong> 看到了，关于王小文的？
+                        </div>
+                        <div class="chat-message message-left">
+                            <span class="chat-avatar" onclick="viewProfile('李华')">李</span>
+                            <strong>李华:</strong> 王小文是谁啊？我们班有这个人吗？
+                        </div>
+                        <div class="chat-message message-left">
+                            <span class="chat-avatar" onclick="viewProfile('王芳')">王</span>
+                            <strong>王芳:</strong> 我查了名册，没有这个人
+                        </div>
+                        <div class="chat-message message-right">
+                            <strong>我:</strong> 但是我记得好像有这么一个人...
+                        </div>
+                        <div class="chat-message message-left">
+                            <span class="chat-avatar" onclick="viewProfile('刘伟')">刘</span>
+                            <strong>刘伟:</strong> 说起来，我好像也有点印象，但又想不起来具体是谁
+                        </div>
+                        <div class="chat-message message-left">
+                            <span class="chat-avatar" onclick="viewProfile('陈静')">陈</span>
+                            <strong>陈静:</strong> 我也是，总觉得教室里好像应该多一个人
+                        </div>
+                        <div class="chat-message message-left">
+                            <span class="chat-avatar" onclick="viewProfile('杨帆')">杨</span>
+                            <strong>杨帆:</strong> 最近大家都神经兮兮的，是不是高考压力太大了
+                        </div>
+                        <div class="chat-message message-left">
+                            <span class="chat-avatar" onclick="viewProfile('周强')">周</span>
+                            <strong>周强 (班长):</strong> 大家别想这些没用的了，高考还有不到200天，抓紧时间学习！
+                        </div>
+                    </div>
+                `;
+            } else if (appName === 'notes') {
+                appContent.innerHTML = `
+                    <button class="back-button" onclick="closeApp()">返回</button>
+                    <h3>笔记</h3>
+                    <div class="note-item">
+                        <div class="note-date">10月16日</div>
+                        <p>早餐：豆浆油条。午餐：食堂的红烧肉，味道一般。晚餐：泡面。今天又想到王小文的事情，心里很乱。</p>
+                    </div>
+                    <div class="note-item">
+                        <div class="note-date">10月15日</div>
+                        <p>早餐：包子。午餐：食堂的鱼香肉丝。晚餐：外卖麻辣烫。摸到了那个刻痕，心里有种说不出的感觉。</p>
+                    </div>
+                    <div class="note-item">
+                        <div class="note-date">10月14日</div>
+                        <p>早餐：面包。午餐：食堂的土豆丝。晚餐：家里带的饭。一切正常，只是总觉得教室里少了点什么。</p>
+                    </div>
+                    <div class="note-item">
+                        <div class="note-date">10月13日</div>
+                        <p>早餐：煎饼果子。午餐：食堂的番茄炒蛋。晚餐：方便面。今天考试了，感觉考得不太好。</p>
+                    </div>
+                `;
+            }
+        }
+        
+        // 查看朋友圈
+        // 显示聊天记录
+        function viewProfile(name) {
+            const appContent = document.getElementById('app-content');
+            let chatContent = '';
+            
+            // 切换到聊天记录视图
+            currentChatContact = name;
+            
+            // 根据不同联系人显示不同聊天内容
+            if (name === '张明') {
+                chatContent = `
+                    <div class="chat-time">聊天时间为：6月8日</div>
+                    <div class="chat-message message-left">
+                        <div class="sender">张明：</div>
+                        <div class="message">天杀的！为什么有人要在论坛说我脚臭啊！这下全校都知道我脚臭了！</div>
+                    </div>
+                    <div class="chat-message message-right">
+                        <div class="sender">我：</div>
+                        <div class="message">对啊啊啊，这种事情私底下提醒就好了吧！</div>
+                    </div>
+                    <div class="chat-message message-left">
+                        <div class="sender">张明：</div>
+                        <div class="message">吴婷说是班里那个小透明说的，估计是被欺负狠了只敢这样报复高三10班吧...</div>
+                    </div>
+                    <div class="chat-message message-right">
+                        <div class="sender">我：</div>
+                        <div class="message">啊....是吗？</div>
+                    </div>`;
+            } else if (name === '李华') {
+                chatContent = `
+                    <div class="chat-time">聊天时间：10月8日</div>
+                    <div class="chat-message message-right">
+                        <div class="sender">我：</div>
+                        <div class="message">啊啊啊啊啊李华！这次英语考试你不准再出现在作文里了，至少求你不要请求我介绍我的家乡可以吗？QAQ</div>
+                    </div>
+                    <div class="chat-message message-left">
+                        <div class="sender">李华：</div>
+                        <div class="message">哼哼，我考虑一下吧</div>
+                    </div>`;
+            } else if (name === '王芳') {
+                chatContent = `
+                    <div class="chat-time">聊天时间：6月20日</div>
+                    <div class="chat-message message-left">
+                        <div class="sender">王芳：</div>
+                        <div class="message">语文老师说这次班里只有两个人报名写作大赛，人数严重不足，让我问你参不参加？</div>
+                    </div>
+                    <div class="chat-message message-right">
+                        <div class="sender">我：</div>
+                        <div class="message">课代表，你是说我吗？如此愚笨的我吗？</div>
+                    </div>
+                    <div class="chat-message message-left">
+                        <div class="sender">王芳：</div>
+                        <div class="message">对啊，你不去的话我给老师说一声就行</div>
+                    </div>
+                    <div class="chat-message message-right">
+                        <div class="sender">我：</div>
+                        <div class="message">我可不不去了，对上一个写作之星，再对上一个全科学霸，我纯陪跑了</div>
+                    </div>`;
+            } else if (name === '刘伟') {
+                chatContent = `
+                    <div class="chat-time">聊天时间：7月30日</div>
+                    <div class="chat-message message-left">
+                        <div class="sender">刘伟：</div>
+                        <div class="message">兄弟，作业做完了吗？借我参考参考呗</div>
+                    </div>
+                    <div class="chat-message message-right">
+                        <div class="sender">我：</div>
+                        <div class="message">滚，还在赶英超美呢</div>
+                    </div>
+                    <div class="chat-message message-left">
+                        <div class="sender">刘伟：</div>
+                        <div class="message">那写完能借我抄一下吗？</div>
+                    </div>
+                    <div class="chat-message message-right">
+                        <div class="sender">我：</div>
+                        <div class="message">妹的，后天就开学了，你是一个字也没动啊？找班长去，班长学霸来的，肯定写完了</div>
+                    </div>
+                    <div class="chat-message message-left">
+                        <div class="sender">刘伟：</div>
+                        <div class="message">那算了，我不敢找他，还是等你吧兄弟</div>
+                    </div>
+                    <div class="chat-message message-right">
+                        <div class="sender">我：</div>
+                        <div class="message">其实我感觉今年暑假作业格外多，明明都提早开学了...奇怪？是不是以前我是直接抄别人答案的...</div>
+                    </div>
+                    <div class="chat-message message-left">
+                        <div class="sender">刘伟：</div>
+                        <div class="message">我也感觉！其实我本来不想找你的，我想找回之前抄的同学，但是我硬是想不起来我上次抄的是谁的作业...</div>
+                    </div>`;
+            } else if (name === '陈静') {
+                chatContent = `
+                    <div class="chat-time">聊天时间：10月9日</div>
+                    <div class="chat-message message-right">
+                        <div class="sender">我：</div>
+                        <div class="message">考完语文了，我想静静了...</div>
+                    </div>
+                    <div class="chat-message message-left">
+                        <div class="sender">陈静：</div>
+                        <div class="message">滚</div>
+                    </div>`;
+            } else if (name === '杨帆') {
+                chatContent = `
+                    <div class="chat-time">聊天时间：6月15日</div>
+                    <div class="chat-message message-left">
+                        <div class="sender">杨帆：</div>
+                        <div class="message">啊啊啊啊语文老师让写作之星晚自习结束之后留下，我忘记说了，你明早提醒一下呗...我肯定又要迟到了明天</div>
+                    </div>
+                    <div class="chat-message message-right">
+                        <div class="sender">我：</div>
+                        <div class="message">包在我身上！话说，，，走读生大大，明天帮我带个肠粉呗！</div>
+                    </div>
+                    <div class="chat-message message-left">
+                        <div class="sender">杨帆：</div>
+                        <div class="message">要什么口味的？</div>
+                    </div>
+                    <div class="chat-message message-right">
+                        <div class="sender">我：</div>
+                        <div class="message">瘦肉鸡蛋！感恩！！</div>
+                    </div>
+                    <div class="chat-message message-left">
+                        <div class="sender">杨帆：</div>
+                        <div class="message">吃这么好？日子不用过了？</div>
+                    </div>
+                    <div class="chat-message message-right">
+                        <div class="sender">我：</div>
+                        <div class="message">对自己好点怎么了！</div>
+                    </div>`;
+            } else if (name === '周强') {
+                chatContent = `
+                    <div class="chat-time">聊天时间：6月15日</div>
+                    <div class="chat-message message-right">
+                        <div class="sender">我：</div>
+                        <div class="message">学神，杨帆让我告诉你语文老师让写作之星晚自习结束之后留下，但她忘记说了，你要不明天去找语文老师？</div>
+                    </div>
+                    <div class="chat-message message-left">
+                        <div class="sender">周强：</div>
+                        <div class="message">嗯</div>
+                    </div>
+                    <div class="chat-time">聊天时间：6月16日</div>
+                    <div class="chat-message message-left">
+                        <div class="sender">周强：</div>
+                        <div class="message">耍我有意思吗？</div>
+                    </div>
+                    <div class="chat-message message-right">
+                        <div class="sender">我：</div>
+                        <div class="message">啊？咋了</div>
+                    </div>
+                    <div class="chat-message message-right">
+                        <div class="sender">我：</div>
+                        <div class="message">哥，你说话？我干嘛了？</div>
+                    </div>
+                    <div class="chat-message message-right">
+                        <div class="sender">我：</div>
+                        <div class="message">哈喽？还在服务区吗？</div>
+                    </div>
+                    <div class="chat-message message-right">
+                        <div class="sender">我：</div>
+                        <div class="message">我靠，，，，哥我对天发誓我从未戏耍过任何人，求真相</div>
+                    </div>
+                    <div class="chat-message message-left">
+                        <div class="sender">周强：</div>
+                        <div class="message">算了，没事了</div>
+                    </div>
+                    <div class="chat-message message-right">
+                        <div class="sender">我：</div>
+                        <div class="message">好滴好滴，一场误会</div>
+                    </div>`;
+            } else {
+                chatContent = `<div class="chat-message">暂无聊天记录</div>`;
+            }
+            
+            // 构建聊天界面
+            appContent.innerHTML = `
+                <button class="back-button" onclick="openApp('wechat')">返回群聊</button>
+                <div class="chat-header">
+                    <div class="chat-avatar" onclick="viewMoment('${name}')">${name.charAt(0)}</div>
+                    <div>
+                        <h3>${name}</h3>
+                        <p>点击头像查看朋友圈</p>
+                    </div>
+                </div>
+                <div class="chat-container">
+                    ${chatContent}
+                </div>
+            `;
+        }
+        
+        // 显示朋友圈
+        function viewMoment(name) {
+            const appContent = document.getElementById('app-content');
+            
+            if (name === '周强') {
+                appContent.innerHTML = `
+                    <button class="back-button" onclick="viewProfile('${name}')">返回私信</button>
+                    <div class="profile-header">
+                        <div class="profile-avatar">周</div>
+                        <div>
+                            <h3>周强</h3>
+                            <p>青藤高中高三10班班长</p>
+                        </div>
+                    </div>
+                    <h4>朋友圈</h4>
+                    <div class="moment-item">
+                        <div class="news-date">10月15日 03:20</div>
+                        <div class="moment-content">又是学习到凌晨三点的一天</div>
+                    </div>
+                    <div class="moment-item">
+                        <div class="news-date">10月12日 04:15</div>
+                        <div class="moment-content">你见过凌晨四点的青藤吗？我见过</div>
+                        <div class="moment-image">[图片：台灯和《五三》]</div>
+                    </div>
+                    <div class="moment-item">
+                        <div class="news-date">6月21日 23:45</div>
+                        <div class="moment-content">这次我一定要赢！</div>
+                    </div>
+                `;
+            } else if (name === '陈静') {
+                appContent.innerHTML = `
+                    <button class="back-button" onclick="viewProfile('${name}')">返回私信</button>
+                    <div class="profile-header">
+                        <div class="profile-avatar">陈</div>
+                        <div>
+                            <h3>陈静</h3>
+                            <p>青藤高中高三10班</p>
+                        </div>
+                    </div>
+                    <h4>朋友圈</h4>
+                    <div class="moment-item">
+                        <div class="news-date">10月16日 18:30</div>
+                        <div class="moment-content">学校门口新开的奶茶店不错！</div>
+                        <div class="moment-image">[图片：一杯奶茶]</div>
+                    </div>
+                    <div class="moment-item">
+                        <div class="news-date">10月14日 12:15</div>
+                        <div class="moment-content">午餐时间到！</div>
+                        <div class="moment-image">[图片：食堂午餐]</div>
+                        <p class="hint" style="color: #ccc; margin-top: 10px;">等等，这张照片角落里好像有一只手，戴着红绳...班里没有人戴这种装饰物啊</p>
+                    </div>
+                    <div class="moment-item">
+                        <div class="news-date">10月10日 19:20</div>
+                        <div class="moment-content">周末和小伙伴们聚餐～</div>
+                        <div class="moment-image">[图片：火锅]</div>
+                    </div>
+                `;
+            } else {
+                appContent.innerHTML = `
+                    <button class="back-button" onclick="viewProfile('${name}')">返回私信</button>
+                    <div class="profile-header">
+                        <div class="profile-avatar">${name.charAt(0)}</div>
+                        <div>
+                            <h3>${name}</h3>
+                            <p>青藤高中高三10班</p>
+                        </div>
+                    </div>
+                    <h4>朋友圈</h4>
+                    <div class="three-days-only">朋友仅展示最近三天的朋友圈</div>
+                `;
+            }
+        }
+        
+        // 搜索新闻
+        function searchNews() {
+            const input = document.getElementById('news-search-input').value.trim();
+            const resultDiv = document.getElementById('news-search-result');
+            
+            if (input === '青藤高中') {
+                resultDiv.innerHTML = `
+                    <div class="news-item">
+                        <div class="news-date">2024年5月15日</div>
+                        <h4>青藤高中高三10班48名同学参与市内大合唱比赛，获得冠军！</h4>
+                        <p>在刚刚结束的青藤市高中生艺术节大合唱比赛中，青藤高中高三10班的48名同学凭借出色的表现荣获冠军。指导老师表示，这是班级团结协作的结果...</p>
+                        <p class="hint">等等，48名同学？但现在的学生名册上只有47人...</p>
+                    </div>
+                `;
+            } else if (input === '写作大赛') {
+                resultDiv.innerHTML = `
+                    <div class="news-item">
+                        <div class="news-date">2024年8月21日</div>
+                        <h4>写作大赛决赛将于10月25日举行</h4>
+                        <p>备受瞩目的全国高中生写作大赛决赛将于10月25日在青藤市文化中心举行。此次比赛吸引了全国各地的优秀高中生参加，经过激烈的初赛和复赛，最终选出了50篇优秀作品进入决赛。</p>
+                        <p>青藤高中报送一篇优秀作文参赛，番薯高中报送两篇优秀作文参赛。获奖作品将有机会在全国性文学杂志上发表，并获得丰厚的奖学金。</p>
+                    </div>
+                `;
+            } else if (input) {
+                resultDiv.innerHTML = `<p>没有找到与"${input}"相关的新闻。</p>`;
+            } else {
+                resultDiv.innerHTML = `<p>请输入搜索关键词</p>`;
+            }
+        }
+        
+        // 关闭应用
+        function closeApp() {
+            document.getElementById('app-content').style.display = 'none';
+            document.getElementById('photo-viewer').style.display = 'none';
+        }
+        
+        // 查看照片
+        function viewPhoto(photoName) {
+            const photoViewer = document.getElementById('photo-viewer');
+            photoViewer.style.display = 'block';
+            
+            if (photoName === '班级合照') {
+                photoViewer.innerHTML = `
+                    <h4>班级合照</h4>
+                    <div class="class-photo-container">
+                        <div class="student-row">
+                            <div class="student">张</div>
+                            <div class="student">李</div>
+                            <div class="student">王</div>
+                            <div class="student">刘</div>
+                            <div class="student">陈</div>
+                            <div class="student">杨</div>
+                            <div class="student">黄</div>
+                            <div class="student">周</div>
+                            <div class="student">吴</div>
+                            <div class="student">郑</div>
+                            <div class="student">孙</div>
+                            <div class="student">朱</div>
+                        </div>
+                        <div class="student-row">
+                            <div class="student">马</div>
+                            <div class="student">胡</div>
+                            <div class="student">林</div>
+                            <div class="student">郭</div>
+                            <div class="student">何</div>
+                            <div class="student">高</div>
+                            <div class="student">梁</div>
+                            <div class="student">罗</div>
+                            <div class="student">宋</div>
+                            <div class="student">谢</div>
+                            <div class="student">唐</div>
+                            <div class="student">韩</div>
+                        </div>
+                        <div class="student-row">
+                            <div class="student">冯</div>
+                            <div class="student">董</div>
+                            <div class="student">萧</div>
+                            <div class="student">程</div>
+                            <div class="student">彭</div>
+                            <div class="student">曾</div>
+                            <div class="student">苏</div>
+                            <div class="student">潘</div>
+                            <div class="student">蒋</div>
+                            <div class="student">蔡</div>
+                            <div class="student">余</div>
+                            <div class="student">杜</div>
+                        </div>
+                        <div class="student-row">
+                            <div class="student">魏</div>
+                            <div class="student">薛</div>
+                            <div class="student">叶</div>
+                            <div class="student">闫</div>
+                            <div class="student">崔</div>
+                            <div class="student">康</div>
+                            <div class="student">史</div>
+                            <div class="student">范</div>
+                            <div class="student">贺</div>
+                            <div class="student">倪</div>
+                            <div class="student">洪</div>
+                            <div class="student wang">王</div>
+                        </div>
+                    </div>
+                    <div class="student-count">学生总数: 48人</div>
+                    <p class="hint" style="color: #ccc; margin-top: 10px;">等等，这张照片上有48个人？但名册上只有47个名字...</p>
+                `;
+            } else if (photoName === '运动会') {
+                photoViewer.innerHTML = `
+                    <h4>运动会照片</h4>
+                    <div class="photo-detail">
+                        <p>[图片：周强举着冠军奖牌，意气风发]</p>
+                        <div class="photo-caption">周强在校运会上获得男子1500米冠军</div>
+                    </div>
+                    <p class="hint" style="color: #ccc; margin-top: 10px;">周强看起来非常自信，似乎对胜利有着强烈的渴望...</p>
+                `;
+            } else if (photoName === '春游') {
+                photoViewer.innerHTML = `
+                    <h4>春游照片</h4>
+                    <div class="photo-detail">
+                        <p>[图片：同学们在公园里兴高采烈地玩耍]</p>
+                        <div class="photo-caption">高三10班春游活动</div>
+                    </div>
+                    <p class="hint" style="color: #ccc; margin-top: 10px;">等等，照片角落语文老师似乎在跟谁说话，但由于拍摄不全，看不到另一个人是谁...</p>
+                `;
+            } else if (photoName === '教室') {
+                photoViewer.innerHTML = `
+                    <h4>教室照片</h4>
+                    <div class="photo-detail">
+                        <p>[图片：黑板上的公告]</p>
+                        <div class="photo-caption">班级公告栏</div>
+                    </div>
+                    <p class="hint" style="color: #ccc; margin-top: 10px;">公告的角落有一个通知：鼓励大家参与写作大赛，获奖者将获得特别奖励...</p>
+                `;
+            } else if (photoName === '图书馆') {
+                photoViewer.innerHTML = `
+                    <h4>图书馆照片</h4>
+                    <div class="photo-detail">
+                        <p>[图片：王芳拿着一本黑皮的书的摆拍照]</p>
+                        <div class="photo-caption">王芳，这就是你追求的装逼学习法吗？</div>
+                    </div>
+                `;
+            } else if (photoName === '食堂') {
+                photoViewer.innerHTML = `
+                    <h4>食堂照片</h4>
+                    <div class="photo-detail">
+                        <p>[图片：两菜一汤的照片]</p>
+                        <div class="photo-caption">狗都不吃</div>
+                    </div>
+                `;
+            } else {
+                photoViewer.innerHTML = `
+                    <h4>${photoName}</h4>
+                    <div class="photo-detail">
+                        <p>[${photoName}图片]</p>
+                    </div>
+                `;
+            }
+        }
+        
+        // 进度将根据游戏进程自动更新
+    </script>
+</body>
+</html>
